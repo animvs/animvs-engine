@@ -108,11 +108,19 @@ public class SkeletonBinary {
 		DataInput input = new DataInput(file.read(512));
 		try {
 			skeletonData.hash = input.readString();
+			if (skeletonData.hash.isEmpty()) skeletonData.hash = null;
 			skeletonData.version = input.readString();
+			if (skeletonData.version.isEmpty()) skeletonData.version = null;
 			skeletonData.width = input.readFloat();
 			skeletonData.height = input.readFloat();
 
 			boolean nonessential = input.readBoolean();
+
+			if (nonessential) {
+				skeletonData.imagesPath = input.readString();
+				if (skeletonData.imagesPath.isEmpty()) skeletonData.imagesPath = null;
+			}
+
 			// Bones.
 			for (int i = 0, n = input.readInt(true); i < n; i++) {
 				String name = input.readString();
