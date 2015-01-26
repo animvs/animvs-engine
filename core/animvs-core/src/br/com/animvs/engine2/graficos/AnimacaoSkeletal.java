@@ -83,16 +83,26 @@ public class AnimacaoSkeletal {
         return skeleton.getSkin().getName();
     }
 
-    public final void setAnimation(String nomeAnimacao, boolean loop) {
-        animationState.setAnimation(0, nomeAnimacao, loop);
+    /**
+     * Returns the name of the current animation (can return null)
+     */
+    public final String getAnimationName() {
+        if (animationState.getCurrent(0) == null)
+            return null;
+
+        return animationState.getCurrent(0).getAnimation().getName();
     }
 
-    public final void addAnimation(String nomeAnimacao, boolean loop) {
-        addAnimation(nomeAnimacao, loop, 0f);
+    public final void setAnimation(String animationName, boolean loop) {
+        animationState.setAnimation(0, animationName, loop);
     }
 
-    public final void addAnimation(String nomeAnimacao, boolean loop, float delay) {
-        animationState.addAnimation(0, nomeAnimacao, loop, delay);
+    public final void addAnimation(String animationName, boolean loop) {
+        addAnimation(animationName, loop, 0f);
+    }
+
+    public final void addAnimation(String animationName, boolean loop, float delay) {
+        animationState.addAnimation(0, animationName, loop, delay);
     }
 
     public final void setSkin(String skinNome) {
