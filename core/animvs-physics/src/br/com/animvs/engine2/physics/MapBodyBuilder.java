@@ -54,9 +54,9 @@ public class MapBodyBuilder {
 
 			BodyDef bd = new BodyDef();
 
-			if (object.getName() != null && object.getName().equals("cart"))
-				bd.type = BodyType.KinematicBody;
-			else
+			/*if (object.getName() != null && object.getName().equals("cart"))
+				bd.type = BodyType.KinematicBody;*/
+			/*else*/
 				bd.type = BodyType.StaticBody;
 
 			Body body = world.createBody(bd);
@@ -68,6 +68,19 @@ public class MapBodyBuilder {
 		}
 		return bodies;
 	}
+
+    public static Body createRetangleBody(RectangleMapObject retangle, World world, float density, BodyType bodyType){
+        Shape shape = getRectangle((RectangleMapObject) retangle);
+
+        BodyDef bd = new BodyDef();
+        bd.type = bodyType;
+        Body body = world.createBody(bd);
+        body.createFixture(shape, density);
+
+        shape.dispose();
+
+        return body;
+    }
 
 	private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
 		Rectangle rectangle = rectangleObject.getRectangle();
