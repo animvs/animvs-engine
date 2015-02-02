@@ -72,7 +72,7 @@ public class AnimvsUIController2 implements Disposable {
         }
     }
 
-    public final Vector2 getRatio() {
+    public Vector2 getRatio() {
         Vector2 ratio = new Vector2();
         return getRatio(ratio);
     }
