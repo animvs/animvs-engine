@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
 
 /**
  * Base physics bodies factory.
@@ -23,7 +22,7 @@ public final class AnimvsBodyFactory {
 
     private static final float FRICTION = 0.01f;
 
-    public static Body createEllipse6(AnimvsPhysicsController physics, Vector2 posicao, BodyDef.BodyType bodyTipo, float altura, float largura, float density, float restituition) {
+    public static Body createEllipse6(AnimvsPhysicsController physics, Vector2 posicao, BodyDef.BodyType bodyTipo, float altura, float largura, float density, float restituition, boolean sensor) {
         Vector2[] vertices = new Vector2[6];
 
         vertices[0] = new Vector2(largura, altura);
@@ -33,14 +32,14 @@ public final class AnimvsBodyFactory {
         vertices[4] = new Vector2(-largura - (largura / 1.2f), 0f);
         vertices[5] = new Vector2(-largura, altura);
 
-        return AnimvsBodyFactory.createByVertex(physics, posicao, 0f, bodyTipo, vertices, density, restituition, largura, altura);
+        return AnimvsBodyFactory.createByVertex(physics, posicao, 0f, bodyTipo, vertices, density, restituition, largura, altura, sensor);
         // Float massa = fisico.getMassa();
         // Engine.loga("MASSA", massa.toString());
         // fisico.setFriccao(0.3f);
 
     }
 
-    public static Body createByVertex(AnimvsPhysicsController physics, Vector2 posicao, float angulo, BodyDef.BodyType tipoBody, Vector2[] vertices, float density, float restitution, float largura, float altura) {
+    public static Body createByVertex(AnimvsPhysicsController physics, Vector2 posicao, float angulo, BodyDef.BodyType tipoBody, Vector2[] vertices, float density, float restitution, float largura, float altura, boolean sensor) {
         BodyDef bodyDef = new BodyDef();
 
         bodyDef.type = tipoBody;
@@ -73,12 +72,24 @@ public final class AnimvsBodyFactory {
         fixtureDef.restitution = restitution;
         fixtureDef.shape = bodyShape;
         fixtureDef.friction = FRICTION;
+        fixtureDef.isSensor = sensor;
 
         body.createFixture(fixtureDef);
         bodyShape.dispose();
 
         // return new Fisico(body, largura, altura);
         return body;
+    }
+
+    public static Body createTriangle(AnimvsPhysicsController physics, Vector2 position, float rotation, BodyDef.BodyType bodyType, float width, float height, float density, float restitution, boolean sensor) {
+
+        Vector2[] vertices = new Vector2[4];
+        vertices[0] = new Vector2(0f * width, -0.5f * height);
+        vertices[1] = new Vector2(0.5f * width, 0f * height);
+        vertices[2] = new Vector2(0f * width, 0.5f * height);
+        vertices[3] = new Vector2(-0.5f * width, 0f * height);
+
+        return createByVertex(physics, position, rotation, bodyType, vertices, density * 2f, restitution, width, height, sensor);
     }
 
     //
