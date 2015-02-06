@@ -127,7 +127,7 @@ public final class AnimvsBodyFactory {
         return body;
     }
 
-    public static Body createSphere(AnimvsPhysicsController physics, Vector2 position, BodyDef.BodyType bodyType, float radius, float density, float restitution) {
+    public static Body createSphere(AnimvsPhysicsController physics, Vector2 position, BodyDef.BodyType bodyType, float radius, float density, float restitution, boolean sensor) {
         BodyDef bodyDef = new BodyDef();
 
         bodyDef.type = bodyType;
@@ -144,6 +144,7 @@ public final class AnimvsBodyFactory {
         fixtureDef.restitution = restitution;
         fixtureDef.shape = bodyShape;
         fixtureDef.friction = FRICTION;
+        fixtureDef.isSensor = sensor;
 
         body.createFixture(fixtureDef);
         bodyShape.dispose();
