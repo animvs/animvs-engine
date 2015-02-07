@@ -93,7 +93,7 @@ public final class AnimvsBodyFactory {
     }
 
     //
-    public static Body createRetangle(AnimvsPhysicsController physics, Vector2 position, float rotation, BodyDef.BodyType bodyType, float width, float height, float density, float restitution, boolean sensor) {
+    public static Body createRetangle(AnimvsPhysicsController physics, Vector2 position, float rotation, BodyDef.BodyType bodyType, float width, float height, float density, float friction, float restitution, boolean sensor) {
 
         BodyDef bodyDef = new BodyDef();
 
@@ -118,7 +118,7 @@ public final class AnimvsBodyFactory {
         fixtureDef.restitution = restitution;
         fixtureDef.shape = bodyShape;
         fixtureDef.isSensor = sensor;
-        fixtureDef.friction = FRICTION;
+        fixtureDef.friction = friction;
 
         body.createFixture(fixtureDef);
         bodyShape.dispose();
