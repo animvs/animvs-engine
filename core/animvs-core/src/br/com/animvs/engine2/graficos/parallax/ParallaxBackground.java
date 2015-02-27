@@ -40,6 +40,7 @@ public final class ParallaxBackground implements Disposable {
 
             if (speed.x < 0) currentX += -(layers[i].region.getRegionWidth() + layers[i].padding.x);
             do {
+                /* Y REPEATING DISABLED:
                 float currentY = -viewport.getCamera().position.y * layers[i].parallaxRatio.y % (layers[i].region.getRegionHeight() + layers[i].padding.y);
 
                 if (speed.y < 0)
@@ -51,7 +52,11 @@ public final class ParallaxBackground implements Disposable {
                             -viewport.getCamera().viewportHeight / 2 + currentY + layers[i].startPosition.y);
 
                     currentY += (layers[i].region.getRegionHeight() + layers[i].padding.y);
-                } while (currentY < viewport.getCamera().viewportHeight);
+                } while (currentY < viewport.getCamera().viewportHeight);*/
+
+                batch.draw(layers[i].region,
+                        -viewport.getCamera().viewportWidth / 2 + currentX + layers[i].startPosition.x,
+                        -viewport.getCamera().viewportHeight / 2 + layers[i].startPosition.y);
 
                 currentX += (layers[i].region.getRegionWidth() + layers[i].padding.x);
             } while (currentX < viewport.getCamera().viewportWidth);
