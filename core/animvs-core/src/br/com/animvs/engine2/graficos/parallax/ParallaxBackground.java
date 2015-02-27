@@ -1,6 +1,8 @@
 package br.com.animvs.engine2.graficos.parallax;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -13,6 +15,9 @@ public final class ParallaxBackground implements Disposable {
     private Viewport viewport;
     private SpriteBatch batch;
     private Vector2 speed = new Vector2();
+
+    private Matrix4 cameraProjectionCache;
+    private OrthographicCamera cameraCache;
 
     /**
      * @param layers The  background layers
@@ -29,12 +34,20 @@ public final class ParallaxBackground implements Disposable {
 
         this.viewport = viewport;
         batch = new SpriteBatch();
+        cameraProjectionCache = new Matrix4();
     }
 
     public void render(float delta) {
+        if (cameraCache != viewport.getCamera())
+            cameraCache = (OrthographicCamera)viewport.getCamera();
+
         viewport.getCamera().position.add(speed.x * delta, speed.y * delta, 0f);
         for (int i = 0; i < layers.length; i++) {
-            batch.setProjectionMatrix(viewport.getCamera().projection);
+
+            cameraProjectionCache.set(viewport.getCamera().projection);
+            cameraProjectionCache.scl(cameraCache.zoom);
+
+            batch.setProjectionMatrix(cameraProjectionCache);
             batch.begin();
             float currentX = -viewport.getCamera().position.x * layers[i].parallaxRatio.x % (layers[i].region.getRegionWidth() + layers[i].padding.x);
 
