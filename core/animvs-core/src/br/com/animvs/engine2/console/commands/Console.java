@@ -1,0 +1,136 @@
+package br.com.animvs.engine2.console.commands;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Array;
+
+/**
+ * Created by DALDEGAN on 01/03/2015.
+ */
+public final class Console {
+
+    private String batchPath;
+
+    private Array<Command> commands;
+
+    public Console(Array<Command> commands, String batchPath) {
+        if (commands == null)
+            throw new RuntimeException("The parameter 'commands' must be != NULL");
+
+        if (batchPath == null)
+            throw new RuntimeException("The parameter 'batchPath' must be != NULL");
+
+        if (!Gdx.files.internal(batchPath).isDirectory())
+            throw new RuntimeException("The specified 'batchPath' isn't a directory: " + batchPath);
+
+        this.commands = commands;
+        this.batchPath = batchPath;
+
+        validateRegisteredCommands();
+    }
+
+    public void executeBatch(String filePath) {
+        execute(Gdx.files.internal(batchPath + filePath + ".txt").readString());
+    }
+
+    public void execute(String commandLine) {
+        String[] lines = commandLine.split("\n");
+
+        for (int i = 0; i < lines.length; i++) {
+            if (checkIsEmptyLine(lines[i]))
+                continue;
+
+            if (checkIsCommentLine(lines[i]))
+                continue;
+
+            String commandName = lines[i].substring(0, lines[i].indexOf('('));
+            String[] parameters = parseParameterStr(i, lines[i]).split(",");
+
+            Command command = findCommand(commandName);
+
+            int line = lines.length > 1 ? i : 0;
+            validateCommand(command, parameters, commandName, commandLine, line);
+
+            int j = 0;
+            try {
+                for (j = 0; j < command.getRequiredParameters().size; j++)
+                    command.getRequiredParameters().get(j).parse(parameters[j]);
+            } catch (Exception e) {
+                throw new ConsoleParameterParseException(command, command.getRequiredParameters().get(i), parameters[j], j, line);
+            }
+
+            try {
+                command.eventExecution(command.getRequiredParameters());
+            } catch (Exception e) {
+                throw new ConsoleParseException("Error during command execution: " + command.getName(), e, commandLine, line);
+            }
+        }
+    }
+
+    private void validateRegisteredCommands() {
+        for (int i = 0; i < commands.size; i++) {
+            for (int j = 0; j < commands.size; j++) {
+                if (i == j)
+                    continue;
+
+                if (commands.get(i).getClass() == commands.get(j).getClass())
+                    throw new RuntimeException("Console command registered more than once: " + commands.get(i).getName());
+            }
+        }
+    }
+
+    private void validateCommand(Command command, String[] parameters, String commandName, String commandLine, int line) {
+        if (command == null)
+            throw new ConsoleParseException("Unknown command: " + commandName, commandLine, line);
+
+        if (command.getRequiredParameters().size > parameters.length)
+            throw new ConsoleParseException("Parameters are missing - Required: " + command.getRequiredParameters().size + " Found: " + parameters.length, commandLine, line);
+    }
+
+    private Command findCommand(String name) {
+        for (int i = 0; i < commands.size; i++) {
+            if (commands.get(i).getName().equals(name))
+                return commands.get(i);
+        }
+
+        return null;
+    }
+
+    private String parseParameterStr(int line, String commandLine) {
+        int startParenthesisCharIndex = -1;
+        int endParenthesisCharIndex = -1;
+
+        for (int i = 0; i < commandLine.length(); i++) {
+            if (commandLine.charAt(i) == '(') {
+                if (startParenthesisCharIndex != -1)
+                    throw new ConsoleParseException("COMMAND VALIDATION ERROR: Duplicated character '(', this char must appear ONLY ONCE in each command line", commandLine, line);
+
+                startParenthesisCharIndex = i;
+                continue;
+            }
+
+            if (commandLine.charAt(i) == ')') {
+                if (endParenthesisCharIndex != -1)
+                    throw new ConsoleParseException("COMMAND VALIDATION ERROR: Duplicated character ')', this char must appear ONLY ONCE in each command line", commandLine, line);
+
+                endParenthesisCharIndex = i;
+                continue;
+            }
+        }
+
+        if (startParenthesisCharIndex == -1)
+            throw new ConsoleParseException("COMMAND VALIDATION ERROR: Missing character '('", commandLine, line);
+
+        if (endParenthesisCharIndex == -1)
+            throw new ConsoleParseException("COMMAND VALIDATION ERROR: Missing character ')'", commandLine, line);
+
+        return commandLine.substring(startParenthesisCharIndex + 1, endParenthesisCharIndex);
+    }
+
+    private boolean checkIsCommentLine(String line) {
+        return line.charAt(0) == '#';
+    }
+
+    private boolean checkIsEmptyLine(String line) {
+        return line.replace('\r', ' ').replace('n', ' ').trim().length() == 0;
+    }
+}
