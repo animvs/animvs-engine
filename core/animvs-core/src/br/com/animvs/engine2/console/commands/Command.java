@@ -31,7 +31,10 @@ public abstract class Command {
     protected abstract void eventExecution(Array<ConsoleParameter> parameters);
 
     public final String getInfo() {
+
         StringBuilder usage = new StringBuilder();
+        usage.append("---------------------- Command '" + getName() + "' Info --------------------\n");
+        usage.append("Command Usage      : ");
         usage.append(getName());
         usage.append("(");
 
@@ -46,7 +49,8 @@ public abstract class Command {
 
         usage.append(")\n");
         usage.append("Command Description: ").append(getDescription()).append("\n");
-        usage.append("---------------------- Parameters Description --------------------------\n");
+        //usage.append("---------------------- Command Parameters Description ------------------\n");
+        usage.append("\nParameters Description:\n");
 
         firstTime = true;
         for (int i = 0; i < getRequiredParameters().size; i++) {
@@ -54,7 +58,7 @@ public abstract class Command {
                 usage.append("\n");
             firstTime = false;
 
-            usage.append(getRequiredParameters().get(i).getName()).append(": ");
+            usage.append("\t").append(getRequiredParameters().get(i).getName()).append(": ");
             usage.append(getRequiredParameters().get(i).getDescription());
         }
 

@@ -55,13 +55,16 @@ public final class Console {
                 for (j = 0; j < command.getRequiredParameters().size; j++)
                     command.getRequiredParameters().get(j).parse(parameters[j]);
             } catch (Exception e) {
-                throw new ConsoleParameterParseException(command, command.getRequiredParameters().get(i), parameters[j], j, line);
+                /*if (parameters.length == 0 || parameters[j] == null || parameters[j].trim().length() == 0)
+                    throw new ConsoleParameterParseException(command, command.getRequiredParameters().get(j), null, j, line);
+                else*/
+                throw new ConsoleParameterParseException(command, command.getRequiredParameters().get(j), parameters[j], j, line);
             }
 
             try {
                 command.eventExecution(command.getRequiredParameters());
             } catch (Exception e) {
-                throw new ConsoleParseException("Error during command execution: " + command.getName(), e, commandLine, line);
+                throw new ConsoleParseException(command, "Error during command execution: " + command.getName(), e, commandLine, line);
             }
         }
     }
@@ -80,10 +83,10 @@ public final class Console {
 
     private void validateCommand(Command command, String[] parameters, String commandName, String commandLine, int line) {
         if (command == null)
-            throw new ConsoleParseException("Unknown command: " + commandName, commandLine, line);
+            throw new ConsoleParseException(null, "Unknown command: " + commandName, commandLine, line);
 
         if (command.getRequiredParameters().size > parameters.length)
-            throw new ConsoleParseException("Parameters are missing - Required: " + command.getRequiredParameters().size + " Found: " + parameters.length, commandLine, line);
+            throw new ConsoleParseException(command, "Parameters are missing - Required: " + command.getRequiredParameters().size + " Found: " + parameters.length, commandLine, line);
     }
 
     private Command findCommand(String name) {
@@ -102,7 +105,7 @@ public final class Console {
         for (int i = 0; i < commandLine.length(); i++) {
             if (commandLine.charAt(i) == '(') {
                 if (startParenthesisCharIndex != -1)
-                    throw new ConsoleParseException("COMMAND VALIDATION ERROR: Duplicated character '(', this char must appear ONLY ONCE in each command line", commandLine, line);
+                    throw new ConsoleParseException(null, "COMMAND VALIDATION ERROR: Duplicated character '(', this char must appear ONLY ONCE in each command line", commandLine, line);
 
                 startParenthesisCharIndex = i;
                 continue;
@@ -110,7 +113,7 @@ public final class Console {
 
             if (commandLine.charAt(i) == ')') {
                 if (endParenthesisCharIndex != -1)
-                    throw new ConsoleParseException("COMMAND VALIDATION ERROR: Duplicated character ')', this char must appear ONLY ONCE in each command line", commandLine, line);
+                    throw new ConsoleParseException(null, "COMMAND VALIDATION ERROR: Duplicated character ')', this char must appear ONLY ONCE in each command line", commandLine, line);
 
                 endParenthesisCharIndex = i;
                 continue;
@@ -118,10 +121,10 @@ public final class Console {
         }
 
         if (startParenthesisCharIndex == -1)
-            throw new ConsoleParseException("COMMAND VALIDATION ERROR: Missing character '('", commandLine, line);
+            throw new ConsoleParseException(null, "COMMAND VALIDATION ERROR: Missing character '('", commandLine, line);
 
         if (endParenthesisCharIndex == -1)
-            throw new ConsoleParseException("COMMAND VALIDATION ERROR: Missing character ')'", commandLine, line);
+            throw new ConsoleParseException(null, "COMMAND VALIDATION ERROR: Missing character ')'", commandLine, line);
 
         return commandLine.substring(startParenthesisCharIndex + 1, endParenthesisCharIndex);
     }

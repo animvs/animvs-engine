@@ -14,9 +14,9 @@ public final class ConsoleParameterParseException extends RuntimeException {
 
     private static String prepareMessage(Command command, ConsoleParameter parameter, String wrongValue, int parameterIndex, int line) {
         String message = null;
-        message = "\n\n --------------------- Error parsing parameter '" + parameterIndex + "' ---------------------\n";
+        message = "\n\n --------------------- Error parsing parameter '" + (parameterIndex + 1) + "' ---------------------\n";
         message += "command name  : " + command.getName() + "\n";
-        message += "wrong value   : " + wrongValue + "\n";
+        message += "wrong value   : " + wrongValue == null ? "NO PARAMETERS INPUTED" : wrongValue + "\n";
         message += "parameter name: " + parameter.getName() + "\n";
         message += "required type : " + parameter.getParameterType();
 
