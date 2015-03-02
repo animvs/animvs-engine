@@ -1,3 +1,0 @@
-[submodule "core/box2DLights"]
-	path = core/box2DLights
-	url = https://github.com/libgdx/box2dlights.git
