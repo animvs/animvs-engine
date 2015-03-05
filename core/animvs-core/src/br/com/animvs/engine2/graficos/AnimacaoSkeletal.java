@@ -37,18 +37,16 @@ public class AnimacaoSkeletal {
 
     private Shader shader;
 
-    private float animationSpeedScale;
-
     private float animationPosition;
 
     private PolygonSpriteBatch polygonBatchCache;
 
     public float getAnimationSpeedScale() {
-        return animationSpeedScale;
+        return animationState.getTimeScale();
     }
 
-    public void setAnimationSpeedScale(float animationSpeedScale) {
-        this.animationSpeedScale = animationSpeedScale;
+    public void setAnimationSpeedScale(int track,float animationSpeedScale) {
+        animationState.setTimeScale(animationSpeedScale);
     }
 
     public final Shader getShader() {
@@ -97,12 +95,20 @@ public class AnimacaoSkeletal {
         animationState.setAnimation(0, animationName, loop);
     }
 
+    public final AnimationState.TrackEntry setAnimation(int track, String animationName, boolean loop) {
+        return animationState.setAnimation(track, animationName, loop);
+    }
+
     public final void addAnimation(String animationName, boolean loop) {
         addAnimation(animationName, loop, 0f);
     }
 
     public final void addAnimation(String animationName, boolean loop, float delay) {
         animationState.addAnimation(0, animationName, loop, delay);
+    }
+
+    public final void addAnimation(int track, String animationName, boolean loop, float delay) {
+        animationState.addAnimation(track, animationName, loop, delay);
     }
 
     public final void setSkin(String skinNome) {
@@ -154,7 +160,6 @@ public class AnimacaoSkeletal {
         this.skeletonData = animacaoSkeletalData.skeletonData;
         this.animationStateData = animacaoSkeletalData.animationStateData;
         escala = new Vector2(1f, 1f);
-        animationSpeedScale = 1f;
         animationPosition = -1;
 
         skeleton = new Skeleton(skeletonData);
@@ -190,7 +195,7 @@ public class AnimacaoSkeletal {
             polygonBatchCache = (PolygonSpriteBatch) batch;
 
         if (animationPosition <= -1)
-            animationState.update(delta * animationSpeedScale);
+            animationState.update(delta);
         else
             animationState.getCurrent(0).setTime(animationPosition);
 
@@ -224,7 +229,7 @@ public class AnimacaoSkeletal {
 
     public final void render(PolygonSpriteBatch batch, float delta) {
         if (animationPosition <= -1)
-            animationState.update(delta * animationSpeedScale);
+            animationState.update(delta);
         else
             animationState.update(animationPosition);
 
