@@ -81,13 +81,23 @@ public final class AnimvsBodyFactory {
         return body;
     }
 
-    public static Body createTriangle(AnimvsPhysicsController physics, Vector2 position, float rotation, BodyDef.BodyType bodyType, float width, float height, float density, float restitution, boolean sensor) {
+    public static Body createDiamond(AnimvsPhysicsController physics, Vector2 position, float rotation, BodyDef.BodyType bodyType, float width, float height, float density, float restitution, boolean sensor) {
 
         Vector2[] vertices = new Vector2[4];
         vertices[0] = new Vector2(0f * width, -0.5f * height);
         vertices[1] = new Vector2(0.5f * width, 0f * height);
         vertices[2] = new Vector2(0f * width, 0.5f * height);
         vertices[3] = new Vector2(-0.5f * width, 0f * height);
+
+        return createByVertex(physics, position, rotation, bodyType, vertices, density * 2f, restitution, width, height, sensor);
+    }
+
+    public static Body createTriangle(AnimvsPhysicsController physics, Vector2 position, float rotation, BodyDef.BodyType bodyType, float width, float height, float density, float restitution, boolean sensor) {
+
+        Vector2[] vertices = new Vector2[3];
+        vertices[0] = new Vector2(0 * width, -0.5f * height);
+        vertices[1] = new Vector2(0.5f * width, 0.5f * height);
+        vertices[2] = new Vector2(-0.5f * width, 0.5f * height);
 
         return createByVertex(physics, position, rotation, bodyType, vertices, density * 2f, restitution, width, height, sensor);
     }
