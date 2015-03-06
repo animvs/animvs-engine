@@ -71,8 +71,8 @@ public class MapBodyBuilder {
         return bodies;
     }
 
-    public static Body createRetangleBody(RectangleMapObject retangle, World world, float density, BodyType bodyType) {
-        Shape shape = getRectangle(retangle);
+    public static Body createRetangleBody(RectangleMapObject rectangle, World world, float density, BodyType bodyType) {
+        Shape shape = getRectangle(rectangle);
 
         BodyDef bd = new BodyDef();
         bd.type = bodyType;

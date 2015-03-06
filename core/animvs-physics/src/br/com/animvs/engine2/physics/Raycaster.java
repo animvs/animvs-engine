@@ -45,6 +45,6 @@ public class RayCaster implements RayCastCallback {
     public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
         collidedBodies.add(new CollisionInfo(fixture, point, normal, fraction));
 
-        return 1;
+        return 1f;
     }
 }
