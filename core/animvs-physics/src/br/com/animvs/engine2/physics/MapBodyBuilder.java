@@ -19,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
 
 public class MapBodyBuilder {
@@ -26,11 +27,11 @@ public class MapBodyBuilder {
     // The pixels per tile. If your tiles are 16x16, this is set to 16f
     private static float ppt = 0;
 
-    public static ArrayMap<String, Body> buildShapes(Map map, float pixels, World world, String physicsLayerName) {
+    public static Array<Body> buildShapes(Map map, float pixels, World world, String physicsLayerName) {
         ppt = pixels;
         MapObjects objects = map.getLayers().get(physicsLayerName).getObjects();
 
-        ArrayMap<String, Body> bodies = new ArrayMap<String, Body>();
+        Array<Body> bodies = new Array<Body>();
 
         for (MapObject object : objects) {
 
@@ -63,7 +64,7 @@ public class MapBodyBuilder {
             Body body = world.createBody(bd);
             body.createFixture(shape, 1);
 
-            bodies.put(object.getName(), body);
+            bodies.add(body);
 
             shape.dispose();
         }
