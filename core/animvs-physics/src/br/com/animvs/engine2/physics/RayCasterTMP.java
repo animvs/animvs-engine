@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Array;
 /**
  * Created by DALDEGAN on 06/03/2015.
  */
-public class RayCaster implements RayCastCallback {
+public class RayCasterTMP implements RayCastCallback {
 
     public final class CollisionInfo {
         public Fixture fixture;
@@ -31,7 +31,7 @@ public class RayCaster implements RayCastCallback {
     private World world;
     private Array<CollisionInfo> collidedBodies;
 
-    public RayCaster(World physicWorld) {
+    public RayCasterTMP(World physicWorld) {
         this.world = physicWorld;
         collidedBodies = new Array<CollisionInfo>();
     }
