@@ -50,8 +50,10 @@ public class AnimvsUIController2 implements Disposable {
     }
 
     public void setUI() {
-        if (ui != null)
+        if (ui != null) {
             ui.eventNotVisible();
+            ui.dispose();
+        }
 
         this.ui = null;
     }
