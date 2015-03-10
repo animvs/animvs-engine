@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.spine.Animation;
 import com.esotericsoftware.spine.AnimationState;
 import com.esotericsoftware.spine.AnimationStateData;
+import com.esotericsoftware.spine.Bone;
 import com.esotericsoftware.spine.Event;
 import com.esotericsoftware.spine.Skeleton;
 import com.esotericsoftware.spine.SkeletonBounds;
@@ -256,6 +257,10 @@ public class AnimacaoSkeletal {
             shader.endRender(batch);
 
         batch.end();
+    }
+
+    public final Bone findBone(String name){
+        return skeleton.findBone(name);
     }
 
     public final void flipX(boolean flip) {
