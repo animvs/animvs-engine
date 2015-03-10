@@ -92,8 +92,8 @@ public class AnimacaoSkeletal {
         return animationState.getCurrent(0).getAnimation().getName();
     }
 
-    public final void setAnimation(String animationName, boolean loop) {
-        animationState.setAnimation(0, animationName, loop);
+    public final AnimationState.TrackEntry setAnimation(String animationName, boolean loop) {
+        return animationState.setAnimation(0, animationName, loop);
     }
 
     public final AnimationState.TrackEntry setAnimation(int track, String animationName, boolean loop) {
