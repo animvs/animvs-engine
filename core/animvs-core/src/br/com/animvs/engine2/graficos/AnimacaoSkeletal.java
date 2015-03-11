@@ -46,7 +46,7 @@ public class AnimacaoSkeletal {
         return animationState.getTimeScale();
     }
 
-    public void setAnimationSpeedScale(int track,float animationSpeedScale) {
+    public void setAnimationSpeedScale(int track, float animationSpeedScale) {
         animationState.setTimeScale(animationSpeedScale);
     }
 
@@ -112,7 +112,7 @@ public class AnimacaoSkeletal {
         animationState.addAnimation(track, animationName, loop, delay);
     }
 
-    public final void clearAnimationTracks(){
+    public final void clearAnimationTracks() {
         animationState.clearTracks();
     }
 
@@ -164,6 +164,7 @@ public class AnimacaoSkeletal {
     public AnimacaoSkeletal(AnimacaoSkeletalData animacaoSkeletalData) {
         this.skeletonData = animacaoSkeletalData.skeletonData;
         this.animationStateData = animacaoSkeletalData.animationStateData;
+
         escala = new Vector2(1f, 1f);
         animationPosition = -1;
 
@@ -232,6 +233,10 @@ public class AnimacaoSkeletal {
         batch.end();
     }
 
+    public void addEventListener(AnimationState.AnimationStateListener listener) {
+        animationState.addListener(listener);
+    }
+
     public final void render(PolygonSpriteBatch batch, float delta) {
         if (animationPosition <= -1)
             animationState.update(delta);
@@ -263,7 +268,7 @@ public class AnimacaoSkeletal {
         batch.end();
     }
 
-    public final Bone findBone(String name){
+    public final Bone findBone(String name) {
         return skeleton.findBone(name);
     }
 
