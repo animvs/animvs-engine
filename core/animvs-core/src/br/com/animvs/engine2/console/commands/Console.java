@@ -28,11 +28,11 @@ public final class Console {
         validateRegisteredCommands();
     }
 
-    public void executeBatch(String filePath) {
-        execute(Gdx.files.internal(batchPath + filePath + ".txt").readString());
+    public void executeBatch(CommandSender sender, String filePath) {
+        execute(sender, Gdx.files.internal(batchPath + filePath + ".txt").readString());
     }
 
-    public void execute(String commandLine) {
+    public void execute(CommandSender sender, String commandLine) {
         String[] lines = commandLine.split("\n");
 
         for (int i = 0; i < lines.length; i++) {
@@ -45,7 +45,7 @@ public final class Console {
             String commandName = lines[i].substring(0, lines[i].indexOf('('));
             String[] parameters = parseParameterStr(i, lines[i]).split(",");
 
-            Command command = findCommand(commandName);
+            Command<CommandSender> command = findCommand(commandName);
 
             int line = lines.length > 1 ? i : 0;
             validateCommand(command, parameters, commandName, commandLine, line);
@@ -62,7 +62,7 @@ public final class Console {
             }
 
             try {
-                command.eventExecution(command.getRequiredParameters());
+                command.eventExecution(sender, command.getRequiredParameters());
             } catch (Exception e) {
                 throw new ConsoleParseException(command, "Error during command execution: " + command.getName(), e, commandLine, line);
             }

@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.StringBuilder;
 /**
  * Created by DALDEGAN on 01/03/2015.
  */
-public abstract class Command {
+public abstract class Command<TSender extends CommandSender> {
     private Array<ConsoleParameter> requiredParameters;
 
     public abstract String getName();
@@ -28,7 +28,7 @@ public abstract class Command {
         requiredParameters = createRequiredParameters();
     }
 
-    protected abstract void eventExecution(Array<ConsoleParameter> parameters);
+    protected abstract void eventExecution(TSender sender, Array<ConsoleParameter> parameters);
 
     public final String getInfo() {
 
