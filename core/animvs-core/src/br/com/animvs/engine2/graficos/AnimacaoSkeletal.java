@@ -35,6 +35,7 @@ public class AnimacaoSkeletal {
     private Vector2 escala;
 
     private float rotacao;
+    private float rotationOffset;
 
     private Shader shader;
 
@@ -76,6 +77,14 @@ public class AnimacaoSkeletal {
 
     public Color getColor() {
         return skeleton.getColor();
+    }
+
+    public void setRotationOffset(float rotationOffset) {
+        this.rotationOffset = rotationOffset;
+    }
+
+    public float getRotationOffset() {
+        return rotationOffset;
     }
 
     public final String getSkin() {
@@ -297,6 +306,6 @@ public class AnimacaoSkeletal {
     }
 
     private final void atualizaRotacao() {
-        skeleton.getRootBone().setRotation(rotacao);
+        skeleton.getRootBone().setRotation(rotacao + rotationOffset);
     }
 }
