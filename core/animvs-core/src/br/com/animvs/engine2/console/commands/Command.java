@@ -38,31 +38,38 @@ public abstract class Command<TSender extends CommandSender> {
         usage.append(getName());
         usage.append("(");
 
-        boolean firstTime = true;
-        for (int i = 0; i < getRequiredParameters().size; i++) {
-            if (!firstTime)
-                usage.append(", ");
-            firstTime = false;
+        if (getRequiredParameters() != null) {
+            boolean firstTime = true;
+            for (int i = 0; i < getRequiredParameters().size; i++) {
+                if (!firstTime)
+                    usage.append(", ");
+                firstTime = false;
 
-            usage.append(getRequiredParameters().get(i).getName() + ": " + getRequiredParameters().get(i).getParameterType());
+                usage.append(getRequiredParameters().get(i).getName());
+                usage.append(": ");
+                usage.append(getRequiredParameters().get(i).getParameterType());
+            }
         }
 
         usage.append(")\n");
         usage.append("Command Description: ").append(getDescription()).append("\n");
         //usage.append("---------------------- Command Parameters Description ------------------\n");
-        usage.append("\nParameters Description:\n");
 
-        firstTime = true;
-        for (int i = 0; i < getRequiredParameters().size; i++) {
-            if (!firstTime)
-                usage.append("\n");
-            firstTime = false;
+        if (getRequiredParameters() != null) {
+            usage.append("\nParameters Description:\n");
 
-            usage.append("\t").append(getRequiredParameters().get(i).getName()).append(": ");
-            usage.append(getRequiredParameters().get(i).getDescription());
+            boolean firstTime = true;
+            for (int i = 0; i < getRequiredParameters().size; i++) {
+                if (!firstTime)
+                    usage.append("\n");
+                firstTime = false;
+
+                usage.append("\t").append(getRequiredParameters().get(i).getName()).append(": ");
+                usage.append(getRequiredParameters().get(i).getDescription());
+            }
         }
 
-        usage.append("\n------------------------------------------------------------------------");
+        usage.append("\n------------------------------------------------------------------------\n");
 
         return usage.toString();
     }

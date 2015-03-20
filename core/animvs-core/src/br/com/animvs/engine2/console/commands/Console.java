@@ -3,6 +3,8 @@ package br.com.animvs.engine2.console.commands;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.Comparator;
+
 /**
  * Created by DALDEGAN on 01/03/2015.
  */
@@ -26,6 +28,31 @@ public final class Console {
         this.batchPath = batchPath;
 
         validateRegisteredCommands();
+    }
+
+    public void printCommands() {
+        Array<String> commandNames = new Array<String>();
+        commandNames.sort(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.toString().compareTo(o2.toString());
+            }
+        });
+
+        for (int i = 0; i < commands.size; i++)
+            commandNames.add(commands.get(i).getName());
+
+        Gdx.app.log("", "\n----------------------------------- COMMAND LIST -----------------------------------");
+        for (int i = 0; i < commandNames.size; i++) {
+            Gdx.app.log("", commandNames.get(i));
+        }
+
+        Gdx.app.log("", "\n----------------------------------- COMMANDS INFO -----------------------------------");
+        for (int i = 0; i < commands.size; i++) {
+            Gdx.app.log("", commands.get(i).getInfo());
+        }
+
+        Gdx.app.log("", "------------------------------------------------------------------------------------");
     }
 
     public void executeBatch(CommandSender sender, String filePath) {
