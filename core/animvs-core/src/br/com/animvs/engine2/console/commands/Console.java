@@ -31,7 +31,7 @@ public final class Console {
     }
 
     public void printCommands() {
-        Array<String> commandNames = new Array<String>();
+        Array<String> commandNames = new Array<String>(true, commands.size);
         commandNames.sort(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {

@@ -1,0 +1,31 @@
+apply plugin: "java"
+
+sourceCompatibility = 1.7
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+sourceSets.main.java.srcDirs = [ "src/" ]
+
+buildscript {
+    repositories {
+        mavenCentral()
+        //mavenLocal()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.0.0'
+        //classpath 'org.robovm:robovm-gradle-plugin:1.0.0'
+    }
+}
+
+eclipse.jdt {
+	file {
+		whenMerged {jdt ->
+			File f = file('.settings/org.eclipse.core.resources.prefs')
+			f.write('eclipse.preferences.version=1\n')
+			f.append('encoding/<project>=UTF-8')
+		}
+	}
+}
+
+eclipse.project {
+    name = "animvs-ai"
+}
