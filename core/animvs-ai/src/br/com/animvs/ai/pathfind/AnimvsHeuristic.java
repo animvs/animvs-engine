@@ -17,11 +17,11 @@ public class AnimvsHeuristic implements Heuristic<AnimvsTileNode> {
 
     @Override
     public float estimate(AnimvsTileNode node, AnimvsTileNode endNode) {
-        int startX = node.getIndex() % controller.getMapWidth();
-        int startY = node.getIndex() / controller.getMapWidth();
+        int startX = node.getIndex() % controller.getMapTilesWidth();
+        int startY = node.getIndex() / controller.getMapTilesWidth();
 
-        int endX = endNode.getIndex() % controller.getMapWidth();
-        int endY = endNode.getIndex() / controller.getMapWidth();
+        int endX = endNode.getIndex() % controller.getMapTilesWidth();
+        int endY = endNode.getIndex() / controller.getMapTilesWidth();
 
         float distance = Math.abs(startX - endX) + Math.abs(startY - endY);
 

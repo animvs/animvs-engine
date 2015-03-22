@@ -14,17 +14,23 @@ public class AnimvsTileNode implements IndexedNode<AnimvsTileNode> {
     private Type type;
     private int index;
 
+    public final int x;
+    public final int y;
+
     public final void setType(Type type) {
         this.type = type;
     }
 
-    public AnimvsTileNode(AnimvsPathFindController controller) {
+    public AnimvsTileNode(AnimvsPathFindController controller, int x, int y) {
         this.connections = new Array<Connection<AnimvsTileNode>>();
         index = controller.createNodeIndex();
 
+        this.x = x;
+        this.y = y;
+
         /*this.tileX = tileX;
         this.tileY = tileY;
-        this.position = new Vector2(tileX * controller.getMapWidth(), tileY * controller.getMapHeight());*/
+        this.position = new Vector2(tileX * controller.getMapTilesWidth(), tileY * controller.getMapTilesHeight());*/
     }
 
     @Override
@@ -43,5 +49,9 @@ public class AnimvsTileNode implements IndexedNode<AnimvsTileNode> {
 
     public enum Type {
         REGULAR
+    }
+
+    public String toString(){
+        return "(" + x + "," + y + ")";
     }
 }

@@ -10,7 +10,7 @@ public class AnimvsConnection implements Connection<AnimvsTileNode> {
     private AnimvsTileNode fromNode;
     private float cost;
 
-    public AnimvsConnection(AnimvsTileNode toNode, AnimvsTileNode fromNode, float cost) {
+    public AnimvsConnection(AnimvsTileNode fromNode, AnimvsTileNode toNode, float cost) {
         this.toNode = toNode;
         this.fromNode = fromNode;
         this.cost = cost;
