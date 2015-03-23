@@ -13,9 +13,6 @@ public abstract class AnimvsPathFindController {
     private Array<AnimvsTileNode> nodes;
     //private TiledMapTileLayer tiles;
 
-    private int levelPixelWidth;
-    private int levelPixelHeight;
-
     private int mapTilesWidth;
     private int mapTilesHeight;
     private int tilePixelWidth;
@@ -25,12 +22,20 @@ public abstract class AnimvsPathFindController {
 
     private int usedNodesIndex;
 
-    public final int getMapTilesWidth() {
+    public int getMapTilesWidth() {
         return mapTilesWidth;
     }
 
-    public final int getMapTilesHeight() {
+    public int getMapTilesHeight() {
         return mapTilesHeight;
+    }
+
+    public int getTilePixelHeight() {
+        return tilePixelHeight;
+    }
+
+    public int getTilePixelWidth() {
+        return tilePixelWidth;
     }
 
     public final AnimvsGraph getGraph() {
@@ -48,21 +53,21 @@ public abstract class AnimvsPathFindController {
     }
 
     public AnimvsTileNode findNode(int tileX, int tileY) {
-        int modX = tileX / tilePixelWidth;
-        int modY = tileY / tilePixelHeight;
+        int modX = tileX / getTilePixelWidth();
+        int modY = tileY / getTilePixelHeight();
 
-        return nodes.get(mapTilesWidth * modY + modX);
+        return nodes.get(getMapTilesWidth() * modY + modX);
     }
 
     public Vector2 findNodePosition(int index) {
-        int y = MathUtils.ceil(index / mapTilesWidth );
-        int x = index % mapTilesWidth;
+        int y = MathUtils.ceil(index / getMapTilesWidth() );
+        int x = index % getMapTilesWidth();
 
-        return new Vector2(x * tilePixelWidth, y * tilePixelHeight);
+        return new Vector2(x * getTilePixelWidth(), y * getTilePixelHeight());
         //AnimvsTileNode downNode = nodes.get(mapTilesWidth * (y - 1) + x);
     }
 
-    public final void computeGraph(TiledMap map) {
+    public void computeGraph(TiledMap map) {
         //tiles = (TiledMapTileLayer) map.getLayers().get("ground");
 
         mapTilesWidth = map.getProperties().get("width", Integer.class);
@@ -70,13 +75,13 @@ public abstract class AnimvsPathFindController {
         tilePixelWidth = map.getProperties().get("tilewidth", Integer.class);
         tilePixelHeight = map.getProperties().get("tileheight", Integer.class);
 
-        levelPixelWidth = mapTilesWidth * tilePixelWidth;
-        levelPixelHeight = mapTilesHeight * tilePixelHeight;
+        //levelPixelWidth = getMapTilesWidth() * getTilePixelWidth();
+        //levelPixelHeight = getMapTilesHeight() * getTilePixelHeight();
 
         //Create all Nodes:
-        nodes = new Array<AnimvsTileNode>(mapTilesWidth * mapTilesHeight);
-        for (int y = 0; y < mapTilesHeight; y++) {
-            for (int x = 0; x < mapTilesWidth; x++) {
+        nodes = new Array<AnimvsTileNode>(getMapTilesWidth() * getMapTilesHeight());
+        for (int y = 0; y < getMapTilesHeight(); y++) {
+            for (int x = 0; x < getMapTilesWidth(); x++) {
                 AnimvsTileNode node = new AnimvsTileNode(this, x, y);
                 node.setType(AnimvsTileNode.Type.REGULAR);
                 nodes.add(node);
@@ -86,8 +91,8 @@ public abstract class AnimvsPathFindController {
         int totalGeneratedConnections = 0;
 
         //Create all Nodes Connections:
-        for (int y = 0; y < mapTilesHeight; y++) {
-            for (int x = 0; x < mapTilesWidth; x++) {
+        for (int y = 0; y < getMapTilesHeight(); y++) {
+            for (int x = 0; x < getMapTilesWidth(); x++) {
                 /*//This is the current tile (node):
                 TiledMapTileLayer.Cell target = tiles.getCell(x, y);
 
@@ -97,34 +102,34 @@ public abstract class AnimvsPathFindController {
                 TiledMapTileLayer.Cell down = tiles.getCell(x, y - 1);
                 TiledMapTileLayer.Cell left = tiles.getCell(x - 1, y);*/
 
-                AnimvsTileNode targetNode = nodes.get(mapTilesWidth * y + x);
+                AnimvsTileNode targetNode = nodes.get(getMapTilesWidth() * y + x);
 
                 float COST = 1f;
 
                 /*if (target == null) {*/
                 if (y != 0 /*&& down == null*/) {
-                    AnimvsTileNode downNode = nodes.get(mapTilesWidth * (y - 1) + x);
+                    AnimvsTileNode downNode = nodes.get(getMapTilesWidth() * (y - 1) + x);
                     if (testConnection(x, y, x, y - 1, targetNode, downNode)) {
                         targetNode.createConnection(downNode, COST);
                         totalGeneratedConnections++;
                     }
                 }
                 if (x != 0 /*&& left == null*/) {
-                    AnimvsTileNode leftNode = nodes.get(mapTilesWidth * y + x - 1);
+                    AnimvsTileNode leftNode = nodes.get(getMapTilesWidth() * y + x - 1);
                     if (testConnection(x, y, x - 1, y, targetNode, leftNode)) {
                         targetNode.createConnection(leftNode, COST);
                         totalGeneratedConnections++;
                     }
                 }
-                if (x != mapTilesWidth - 1 /*&& right == null*/) {
-                    AnimvsTileNode rightNode = nodes.get(mapTilesWidth * y + x + 1);
+                if (x != getMapTilesWidth() - 1 /*&& right == null*/) {
+                    AnimvsTileNode rightNode = nodes.get(getMapTilesWidth() * y + x + 1);
                     if (testConnection(x, y, x + 1, y, targetNode, rightNode)) {
                         targetNode.createConnection(rightNode, COST);
                         totalGeneratedConnections++;
                     }
                 }
-                if (y != mapTilesHeight - 1 /*&& up == null*/) {
-                    AnimvsTileNode upNode = nodes.get(mapTilesWidth * (y + 1) + x);
+                if (y != getMapTilesHeight() - 1 /*&& up == null*/) {
+                    AnimvsTileNode upNode = nodes.get(getMapTilesWidth() * (y + 1) + x);
                     if (testConnection(x, y, x, y + 1, targetNode, upNode)) {
                         targetNode.createConnection(upNode, COST);
                         totalGeneratedConnections++;
@@ -134,7 +139,7 @@ public abstract class AnimvsPathFindController {
             }
         }
 
-        Gdx.app.log("AI", "Pathfinder has generated " + totalGeneratedConnections + " connections out of " + (mapTilesWidth * mapTilesHeight) + " tiles (~" + (int) ((float) totalGeneratedConnections / (mapTilesWidth * mapTilesHeight * 4f) * 100f) + "% of all tiles are passable)");
+        Gdx.app.log("AI", "Pathfinder has generated " + totalGeneratedConnections + " connections out of " + (getMapTilesWidth() * getMapTilesHeight()) + " tiles (~" + (int) ((float) totalGeneratedConnections / (mapTilesWidth * mapTilesHeight * 4f) * 100f) + "% of all tiles are passable)");
 
         graph = new AnimvsGraph(nodes);
     }
