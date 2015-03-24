@@ -125,6 +125,10 @@ public class AnimacaoSkeletal {
         animationState.clearTracks();
     }
 
+    public final void clearAnimationTrack(int track) {
+        animationState.clearTrack(track);
+    }
+
     public final void setSkin(String skinNome) {
         skeleton.setSkin(skinNome);
     }
