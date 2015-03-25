@@ -112,6 +112,9 @@ public final class Console {
         if (command == null)
             throw new ConsoleParseException(null, "Unknown command: " + commandName, commandLine, line);
 
+        if (command.getRequiredParameters() == null)
+            throw new RuntimeException("Command '" + command.getName() + "' initialized by Console Engine (missing required parameters)");
+
         if (command.getRequiredParameters().size > parameters.length)
             throw new ConsoleParseException(command, "Parameters are missing - Required: " + command.getRequiredParameters().size + " Found: " + parameters.length, commandLine, line);
     }
