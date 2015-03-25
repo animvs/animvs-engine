@@ -69,6 +69,11 @@ public final class Console {
             if (checkIsCommentLine(lines[i]))
                 continue;
 
+            if (!lines[i].contains("("))
+                throw new RuntimeException("Invalid command line (missing '(' character): " + lines[i]);
+            if (!lines[i].contains(")"))
+                throw new RuntimeException("Invalid command line (missing ')' character): " + lines[i]);
+
             String commandName = lines[i].substring(0, lines[i].indexOf('('));
             String[] parameters = parseParameterStr(i, lines[i]).split(",");
 
