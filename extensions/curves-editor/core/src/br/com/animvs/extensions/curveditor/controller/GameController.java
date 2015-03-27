@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.BSpline;
+import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
@@ -21,7 +22,7 @@ public final class GameController implements Disposable {
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
 
-    private BSpline<Vector2> curve;
+    private Bezier<Vector2> curve;
     private Vector2[] curveControlPoints;
     private Vector2[] cachedPoints;
 
@@ -43,7 +44,7 @@ public final class GameController implements Disposable {
 
         input();
 
-        if (curve == null || curve.controlPoints.length <= 1)
+        if (curve == null || curve.points.size <= 1)
             return;
 
         this.shapeRenderer.setColor(0f, 0f, 1f, 1f);
@@ -117,9 +118,9 @@ public final class GameController implements Disposable {
             return;
 
         if (curve == null)
-            curve = new BSpline<Vector2>(newPoints, 1, true);
+            curve = new Bezier<Vector2>(newPoints);
         else
-            curve.set(newPoints, 1, false);
+            curve.set(newPoints);
     }
 
     @Override
