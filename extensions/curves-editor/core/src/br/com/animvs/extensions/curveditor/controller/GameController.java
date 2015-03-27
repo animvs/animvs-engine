@@ -34,11 +34,6 @@ public final class GameController implements Disposable {
 
         this.shapeRenderer = new ShapeRenderer();
         //this.shapeRenderer.setProjectionMatrix(camera.combined);
-
-        this.points = new Vector2[SPILINE_DETAIL];
-
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
     }
 
     public final void render() {
