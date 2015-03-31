@@ -109,16 +109,16 @@ public class AnimacaoSkeletal {
         return animationState.setAnimation(track, animationName, loop);
     }
 
-    public final void addAnimation(String animationName, boolean loop) {
-        addAnimation(animationName, loop, 0f);
+    public final AnimationState.TrackEntry addAnimation(String animationName, boolean loop) {
+        return addAnimation(animationName, loop, 0f);
     }
 
-    public final void addAnimation(String animationName, boolean loop, float delay) {
-        animationState.addAnimation(0, animationName, loop, delay);
+    public final AnimationState.TrackEntry addAnimation(String animationName, boolean loop, float delay) {
+        return animationState.addAnimation(0, animationName, loop, delay);
     }
 
-    public final void addAnimation(int track, String animationName, boolean loop, float delay) {
-        animationState.addAnimation(track, animationName, loop, delay);
+    public final AnimationState.TrackEntry addAnimation(int track, String animationName, boolean loop, float delay) {
+        return animationState.addAnimation(track, animationName, loop, delay);
     }
 
     public final void clearAnimationTracks() {
