@@ -24,17 +24,19 @@ class SmartFontGenerator {
     private int referenceScreenWidth;
 
     private String propertyName;
+    private String versionTag;
 
     // TODO figure out optimal page fontSize automatically
     // private int pageSize;
 
     // private Array<String> arquivosFonte;
 
-    public SmartFontGenerator(int referenceScreenwidth, String propertyName) {
+    public SmartFontGenerator(String versionTag, int referenceScreenWidth, String propertyName) {
         if (propertyName == null)
             throw new RuntimeException("The parameter 'propertyName' must be != null");
 
-        this.referenceScreenWidth = referenceScreenwidth;
+        this.versionTag = versionTag;
+        this.referenceScreenWidth = referenceScreenWidth;
         forceGeneration = false;
         generatedFontDir = "cache/fonts/";
         this.propertyName = propertyName;
@@ -78,14 +80,17 @@ class SmartFontGenerator {
         AnimvsBitmapFont font = null;
         // if fonts are already generated, just load from file
         Preferences fontPrefs = Gdx.app.getPreferences(propertyName);
+        String lastVersionTag = fontPrefs.getString("tag");
         int displayWidth = fontPrefs.getInteger("display-width", 0);
         int displayHeight = fontPrefs.getInteger("display-height", 0);
         String lastUsedLanguage = fontPrefs.getString("lang");
         boolean loaded = false;
-        if (displayWidth != Gdx.graphics.getWidth() || displayHeight != Gdx.graphics.getHeight()) {
+        if (displayWidth != Gdx.graphics.getWidth() || displayHeight != Gdx.graphics.getHeight())
             Gdx.app.debug(TAG, "Screen fontSize change detected, regenerating fonts");
-        } else if (!lastUsedLanguage.equals(language))
+        else if (!lastUsedLanguage.equals(language))
             Gdx.app.debug(TAG, "Language change detected, regenerating fonts");
+        else if (!lastVersionTag.equals(versionTag))
+            Gdx.app.debug(TAG, "Version change detected, regenerating fonts");
         else if (!forceGeneration) {
             try {
                 // try to load from file
@@ -120,6 +125,7 @@ class SmartFontGenerator {
 
         // store screen width for detecting screen fontSize change
         // on later startups, which will require font regeneration
+        fontPrefs.putString("tag", versionTag);
         fontPrefs.putInteger("display-width", Gdx.graphics.getWidth());
         fontPrefs.putInteger("display-height", Gdx.graphics.getHeight());
         fontPrefs.putString("lang", language);
@@ -274,7 +280,7 @@ class SmartFontGenerator {
         return pageRefs;
     }
 
-    private void setDefaultFilter(AnimvsBitmapFont font){
+    private void setDefaultFilter(AnimvsBitmapFont font) {
         font.getRegion().getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Linear);
     }
 

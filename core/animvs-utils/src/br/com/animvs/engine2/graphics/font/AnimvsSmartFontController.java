@@ -6,6 +6,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
+import javax.security.auth.login.Configuration;
+
 import br.com.animvs.engine2.graphics.font.SmartFontGenerator.AnimvsBitmapFont;
 import br.com.animvs.engine2.internationalization.AnimvsLanguageController;
 import br.com.animvs.engine2.internationalization.AnimvsLanguageController.LanguageChangedListener;
@@ -21,6 +23,7 @@ public final class AnimvsSmartFontController {
     private ArrayMap<String, AnimvsBitmapFont> fonts;
     private AnimvsLanguageController languageController;
     private String propertyName;
+    private String versiontag;
 
     private int referenceWidthCache;
 
@@ -49,9 +52,10 @@ public final class AnimvsSmartFontController {
         fonts.put("en", a);
     }
 
-    public AnimvsSmartFontController(AnimvsLanguageController languageController, String propertyName, String languageDir, Array<AnimvsSmartFontInfo> fontsInfo, String additionalCharacters, int referenceWidth) {
+    public AnimvsSmartFontController(AnimvsLanguageController languageController, String propertyName, String languageDir, Array<AnimvsSmartFontInfo> fontsInfo, String additionalCharacters, String versionTag, int referenceWidth) {
         this.propertyName = propertyName;
         this.additionalCharacters = additionalCharacters;
+        this.versiontag = versionTag;
 
         this.referenceWidthCache = referenceWidth;
 
@@ -89,7 +93,7 @@ public final class AnimvsSmartFontController {
         }
 
         if (generator == null)
-            generator = new SmartFontGenerator(referenceWidthCache, propertyName);
+            generator = new SmartFontGenerator(versiontag, referenceWidthCache, propertyName);
         else
             disposeFonts();
 
