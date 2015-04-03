@@ -136,7 +136,7 @@ public abstract class AnimvsUI2 implements ApplicationListener {
 
     public void setBoundsByViewport(Viewport viewport) {
         //window.setBounds(viewport.getLeftGutterWidth(), viewport.getTopGutterY(), viewport.getScreenWidth(), viewport.getScreenHeight());
-        window.setBounds(viewport.getLeftGutterWidth(), viewport.getTopGutterHeight(), viewport.getScreenWidth(), viewport.getScreenHeight());
+        window.setBounds(viewport.getLeftGutterWidth(), viewport.getTopGutterHeight()-1, viewport.getScreenWidth(), viewport.getScreenHeight()+1);
     }
 
     @Override
