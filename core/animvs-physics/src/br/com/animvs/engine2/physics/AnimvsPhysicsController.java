@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
@@ -20,6 +21,7 @@ public class AnimvsPhysicsController implements Disposable {
     private World world;
     private Vector2 gravity;
     private Array<Body> bodiesToDestroy;
+    private Array<Joint> jointsToDestroy;
 
     private PhysicsDebugRenderer debug;
 
@@ -30,7 +32,7 @@ public class AnimvsPhysicsController implements Disposable {
             fixtures.get(i).setSensor(true);
     }
 
-    public static final void setFilter(Body body, Filter filter){
+    public static final void setFilter(Body body, Filter filter) {
         Array<Fixture> fixtures = body.getFixtureList();
 
         for (int i = 0; i < fixtures.size; i++)
@@ -74,6 +76,7 @@ public class AnimvsPhysicsController implements Disposable {
 
         stepHandler = new FixedTimeStepHandler(minFPS, maxFPS, velocityInterations, positionInterations);
         bodiesToDestroy = new Array<Body>();
+        jointsToDestroy = new Array<Joint>();
     }
 
     public synchronized void initialize() {
@@ -93,7 +96,7 @@ public class AnimvsPhysicsController implements Disposable {
         if (world.isLocked())
             Gdx.app.log("WORLD LOCKED", "WORLD LOCKED -----------------------------------------------------------");
         else
-            destroyQueuedBodies();
+            destroyQueued();
 
         eventAfterUpdate();
     }
@@ -112,13 +115,20 @@ public class AnimvsPhysicsController implements Disposable {
         bodiesToDestroy.add(body);
     }
 
+    public final synchronized void destroyJoint(Joint joint) {
+        if (jointsToDestroy.contains(joint, true))
+            return;
+
+        jointsToDestroy.add(joint);
+    }
+
     protected void eventAfterUpdate() {
         //Can be overriden if necessary
     }
 
-    private void destroyQueuedBodies() {
+    private void destroyQueued() {
         if (world.isLocked()) {
-            Gdx.app.log("PHYSICS", "AVOIDING BODY DISPOSAL - WORLD IS LOCKED");
+            Gdx.app.log("PHYSICS", "AVOIDING PHYSIC DISPOSAL - WORLD IS LOCKED");
             return;
         }
 
@@ -127,7 +137,13 @@ public class AnimvsPhysicsController implements Disposable {
                 world.destroyBody(bodiesToDestroy.get(i));
         }
 
+        for (int i = 0; i < jointsToDestroy.size; i++) {
+            if (jointsToDestroy.get(i) != null)
+                world.destroyJoint(jointsToDestroy.get(i));
+        }
+
         bodiesToDestroy.clear();
+        jointsToDestroy.clear();
     }
 
     public void TMP_FORCE_WORLD_UNLOCK() {
