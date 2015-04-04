@@ -21,8 +21,8 @@ public final class Console {
         if (batchPath == null)
             throw new RuntimeException("The parameter 'batchPath' must be != NULL");
 
-        if (!Gdx.files.internal(batchPath).isDirectory())
-            throw new RuntimeException("The specified 'batchPath' isn't a directory: " + batchPath);
+        /*if (!Gdx.files.internal(batchPath).isDirectory())
+            throw new RuntimeException("The specified 'batchPath' isn't a directory: " + batchPath);*/
 
         this.commands = commands;
         this.batchPath = batchPath;
