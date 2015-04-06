@@ -33,7 +33,9 @@ public abstract class Command<TSender extends CommandSender> {
     public final String getInfo() {
 
         StringBuilder usage = new StringBuilder();
-        usage.append("---------------------- Command '" + getName() + "' Info --------------------\n");
+        usage.append("---------------------- Command '");
+        usage.append(getName());
+        usage.append("' Info --------------------\n");
         usage.append("Command Usage      : ");
         usage.append(getName());
         usage.append("(");

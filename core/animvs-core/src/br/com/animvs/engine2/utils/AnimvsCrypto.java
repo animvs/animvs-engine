@@ -41,7 +41,7 @@ public final class AnimvsCrypto {
 
     public static void testObfuscation(String key, String text) {
         try {
-            String encryptedStr = new String(obfuscate(text, key));
+            String encryptedStr = obfuscate(text, key);
             String decryptedStr = deobfuscate(encryptedStr, key);
             Gdx.app.log("CRYPT TEST", "Encrypted message: " + encryptedStr);
             Gdx.app.log("CRYPT TEST", "Decrypted message: " + decryptedStr);

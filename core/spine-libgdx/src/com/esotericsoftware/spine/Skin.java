@@ -128,8 +128,7 @@ public class Skin {
 			if (object == null) return false;
 			Key other = (Key)object;
 			if (slotIndex != other.slotIndex) return false;
-			if (!name.equals(other.name)) return false;
-			return true;
+			return name.equals(other.name);
 		}
 
 		public String toString () {

@@ -1,15 +1,15 @@
 package br.com.animvs.engine2.resolver.playgames;
 
 public interface PlayGamesResolver {
-	public boolean getSignedInGPGS();
+	boolean getSignedInGPGS();
 
-	public void loginGPGS();
+	void loginGPGS();
 
-	public void submitScoreGPGS(long score);
+	void submitScoreGPGS(long score);
 
-	public void unlockAchievementGPGS(String achievementId);
+	void unlockAchievementGPGS(String achievementId);
 
-	public void getLeaderboardGPGS();
+	void getLeaderboardGPGS();
 
-	public void getAchievementsGPGS();
+	void getAchievementsGPGS();
 }

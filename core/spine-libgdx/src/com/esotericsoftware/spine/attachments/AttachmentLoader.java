@@ -34,14 +34,14 @@ import com.esotericsoftware.spine.Skin;
 
 public interface AttachmentLoader {
 	/** @return May be null to not load any attachment. */
-	public RegionAttachment newRegionAttachment (Skin skin, String name, String path);
+	RegionAttachment newRegionAttachment(Skin skin, String name, String path);
 
 	/** @return May be null to not load any attachment. */
-	public MeshAttachment newMeshAttachment (Skin skin, String name, String path);
+	MeshAttachment newMeshAttachment(Skin skin, String name, String path);
 
 	/** @return May be null to not load any attachment. */
-	public SkinnedMeshAttachment newSkinnedMeshAttachment (Skin skin, String name, String path);
+	SkinnedMeshAttachment newSkinnedMeshAttachment(Skin skin, String name, String path);
 
 	/** @return May be null to not load any attachment. */
-	public BoundingBoxAttachment newBoundingBoxAttachment (Skin skin, String name);
+	BoundingBoxAttachment newBoundingBoxAttachment(Skin skin, String name);
 }

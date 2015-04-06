@@ -24,12 +24,12 @@ import com.badlogic.gdx.utils.Array;
  class BitmapFontWriter {
 
 	/** The output format. */
-	public static enum OutputFormat {
+	public enum OutputFormat {
 
 		/** AngelCodeFont text format */
 		Text,
 		/** AngelCodeFont XML format */
-		XML;
+		XML
 	}
 
 	/** The output format */

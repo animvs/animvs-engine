@@ -119,8 +119,7 @@ public class SkeletonBounds {
 		float x = (minY - y1) / m + x1;
 		if (x > minX && x < maxX) return true;
 		x = (maxY - y1) / m + x1;
-		if (x > minX && x < maxX) return true;
-		return false;
+		return x > minX && x < maxX;
 	}
 
 	/** Returns true if the axis aligned bounding box intersects the axis aligned bounding box of the specified bounds. */

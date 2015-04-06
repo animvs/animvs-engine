@@ -35,7 +35,7 @@ public final class Console {
         commandNames.sort(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
-                return o1.toString().compareTo(o2.toString());
+                return o1.compareTo(o2);
             }
         });
 

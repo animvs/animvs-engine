@@ -143,10 +143,10 @@ public class Animation {
 		return -1;
 	}
 
-	static public interface Timeline {
+	public interface Timeline {
 		/** Sets the value(s) for the specified time.
 		 * @param events May be null to not collect fired events. */
-		public void apply (Skeleton skeleton, float lastTime, float time, Array<Event> events, float alpha);
+		void apply(Skeleton skeleton, float lastTime, float time, Array<Event> events, float alpha);
 	}
 
 	/** Base class for frames that use an interpolation bezier curve. */

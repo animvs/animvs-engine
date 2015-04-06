@@ -94,7 +94,7 @@ public class RegionSequenceAttachment extends RegionAttachment {
 		this.mode = mode;
 	}
 
-	static public enum Mode {
+	public enum Mode {
 		forward, backward, forwardLoop, backwardLoop, pingPong, random
 	}
 }

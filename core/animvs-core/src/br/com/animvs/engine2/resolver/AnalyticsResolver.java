@@ -1,6 +1,6 @@
 package br.com.animvs.engine2.resolver;
 
-public abstract interface AnalyticsResolver {
+public interface AnalyticsResolver {
 	void dispatch();
 	
 	void analyticsTela(String tela);
