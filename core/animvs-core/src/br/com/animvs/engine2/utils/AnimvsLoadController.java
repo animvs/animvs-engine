@@ -46,6 +46,7 @@ public abstract class AnimvsLoadController implements Disposable {
     private Shader shader;
 
     private boolean loadStarted;
+    private boolean customAssetManager;
 
     public void setShader(Shader shader) {
         this.shader = shader;
@@ -62,7 +63,16 @@ public abstract class AnimvsLoadController implements Disposable {
     protected abstract Array<AnimvsLoadParameter> getResources();
 
     public AnimvsLoadController() {
-        assetManager = new AssetManager();
+        this(null);
+    }
+
+    public AnimvsLoadController(AssetManager assetManager) {
+        this.assetManager = assetManager;
+
+        if (assetManager == null)
+            this.assetManager = new AssetManager();
+        else
+            customAssetManager = true;
     }
 
     @SuppressWarnings("unchecked")
@@ -98,7 +108,7 @@ public abstract class AnimvsLoadController implements Disposable {
 
     @Override
     public void dispose() {
-        if (assetManager != null)
+        if (assetManager != null && !customAssetManager)
             assetManager.dispose();
     }
 }
