@@ -228,7 +228,7 @@ public class AnimacaoSkeletal {
         animationState.apply(skeleton);
         skeleton.updateWorldTransform();
 
-        batch.begin();
+        //batch.begin();
 
         if (shader != null) {
             shader.beginRender(batch);
@@ -243,7 +243,7 @@ public class AnimacaoSkeletal {
         if (shader != null)
             shader.endRender(batch);
 
-        batch.end();
+        //batch.end();
     }
 
     public void addEventListener(AnimationState.AnimationStateListener listener) {
