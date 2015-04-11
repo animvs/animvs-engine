@@ -52,13 +52,13 @@ class SmartFontGenerator {
             super(fontFile);
         }
 
-        public AnimvsBitmapFont(BitmapFontData fontData, TextureRegion[] textureRegions, boolean integer) {
+        public AnimvsBitmapFont(BitmapFontData fontData, Array<TextureRegion> textureRegions, boolean integer) {
             super(fontData, textureRegions, integer);
         }
 
         @Override
         public void dispose() {
-            for (int i = 0; i < getRegions().length; i++)
+            for (int i = 0; i < getRegions().size; i++)
                 getRegion(i).getTexture().dispose();
         }
     }
@@ -158,7 +158,7 @@ class SmartFontGenerator {
 
         FreeTypeFontGenerator.FreeTypeBitmapFontData fontData = generator.generateData(fontParameters);
         Array<PixmapPacker.Page> pages = packer.getPages();
-        TextureRegion[] texRegions = new TextureRegion[pages.size];
+        Array<TextureRegion> texRegions = new Array<TextureRegion>(pages.size);
         for (int i = 0; i < pages.size; i++) {
             PixmapPacker.Page p = pages.get(i);
             Texture tex = new Texture(new PixmapTextureData(p.getPixmap(), p.getPixmap().getFormat(), false, false, true)) {
@@ -169,7 +169,7 @@ class SmartFontGenerator {
                 }
             };
             tex.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-            texRegions[i] = new TextureRegion(tex);
+            texRegions.add(new TextureRegion(tex));
         }
         AnimvsBitmapFont font = new AnimvsBitmapFont(fontData, texRegions, true);
         setDefaultFilter(font);

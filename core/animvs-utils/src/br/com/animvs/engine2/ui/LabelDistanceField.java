@@ -1,3 +1,4 @@
+/*
 package br.com.animvs.engine2.ui;
 
 import com.badlogic.gdx.graphics.Color;
@@ -7,18 +8,20 @@ import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.StringBuilder;
 
 import br.com.animvs.engine2.graphics.font.AnimvsDistanceFieldFontController;
 
+*/
 /**
  * Created by Daldegan on 14/10/2014.
- */
+ *//*
+
 public class LabelDistanceField extends Widget {
 
-    /*public LabelDistanceField(AnimvsDistanceFieldFontController distanceFieldController, CharSequence text, Skin skin, float fontSize) {
+    */
+/*public LabelDistanceField(AnimvsDistanceFieldFontController distanceFieldController, CharSequence text, Skin skin, float fontSize) {
         super(text, skin);
         initialize(fontSize, distanceFieldController);
     }
@@ -26,9 +29,11 @@ public class LabelDistanceField extends Widget {
     public LabelDistanceField(AnimvsDistanceFieldFontController distanceFieldController, CharSequence text, Skin skin, String styleName, float fontSize) {
         super(text, skin, styleName);
         initialize(fontSize, distanceFieldController);
-    }*/
+    }*//*
 
-    /*@Override
+
+    */
+/*@Override
     public void draw(Batch batch, float parentAlpha) {
         setFontSize(fontSize * distanceFieldController.getRatio());
 
@@ -41,7 +46,8 @@ public class LabelDistanceField extends Widget {
         batch.setShader(null);
 
         setY(originalY);
-    }*/
+    }*//*
+
 
     static private final Color tempColor = new Color();
 
@@ -72,18 +78,22 @@ public class LabelDistanceField extends Widget {
         this(controller, text, skin.get(styleName, LabelDistanceFieldStyle.class), fontSize);
     }
 
-    /**
+    */
+/**
      * Creates a label, using a {@link LabelDistanceFieldStyle} that has a BitmapFont with the specified name from the skin and the specified
      * color.
-     */
+     *//*
+
     public LabelDistanceField(AnimvsDistanceFieldFontController controller, CharSequence text, Skin skin, String fontName, Color color, float fontSize) {
         this(controller, text, new LabelDistanceFieldStyle(skin.getFont(fontName), color), fontSize);
     }
 
-    /**
+    */
+/**
      * Creates a label, using a {@link LabelDistanceFieldStyle} that has a BitmapFont with the specified name and the specified color from the
      * skin.
-     */
+     *//*
+
     public LabelDistanceField(AnimvsDistanceFieldFontController controller, CharSequence text, Skin skin, String fontName, String colorName, float fontSize) {
         this(controller, text, new LabelDistanceFieldStyle(skin.getFont(fontName), skin.getColor(colorName)), fontSize);
     }
@@ -119,17 +129,21 @@ public class LabelDistanceField extends Widget {
         invalidateHierarchy();
     }
 
-    /**
+    */
+/**
      * Returns the label's style. Modifying the returned style may not have an effect until {@link #setStyle(LabelDistanceFieldStyle)} is
      * called.
-     */
+     *//*
+
     public LabelDistanceFieldStyle getStyle() {
         return style;
     }
 
-    /**
+    */
+/**
      * @param newText May be null.
-     */
+     *//*
+
     public void setText(CharSequence newText) {
         if (newText instanceof StringBuilder) {
             if (text.equals(newText)) return;
@@ -297,7 +311,8 @@ public class LabelDistanceField extends Widget {
         return bounds;
     }
 
-    /**
+    */
+/**
      * If false, the text will only wrap where it contains newlines (\n). The preferred fontSize of the label will be the text bounds.
      * If true, the text will word wrap using the width of the label. The preferred width of the label will be 0, it is expected
      * that the something external will set the width of the label. Default is false.
@@ -305,25 +320,30 @@ public class LabelDistanceField extends Widget {
      * When wrap is enabled, the label's preferred height depends on the width of the label. In some cases the parent of the label
      * will need to layout twice: once to set the width of the label and a second time to adjust to the label's new preferred
      * height.
-     */
+     *//*
+
     public void setWrap(boolean wrap) {
         this.wrap = wrap;
         invalidateHierarchy();
     }
 
-    /**
+    */
+/**
      * @param alignment Aligns each line of text horizontally and all the text vertically.
      * @see Align
-     */
+     *//*
+
     public void setAlignment(int alignment) {
         setAlignment(alignment, alignment);
     }
 
-    /**
+    */
+/**
      * @param labelAlign Aligns all the text with the label widget.
      * @param lineAlign  Aligns each line of text (left, right, or center).
      * @see Align
-     */
+     *//*
+
     public void setAlignment(int labelAlign, int lineAlign) {
         this.labelAlign = labelAlign;
 
@@ -346,34 +366,44 @@ public class LabelDistanceField extends Widget {
         return fontSize;
     }
 
-    /**
+    */
+/**
      * When true the text will be truncated with an ellipse if it does not fit within the width of the label. Default is false.
-     */
+     *//*
+
     public void setEllipse(boolean ellipse) {
         this.ellipse = ellipse;
     }
 
-    /**
+    */
+/**
      * Allows subclasses to access the cache in {@link #draw(Batch, float)}.
-     */
+     *//*
+
     protected BitmapFontCache getBitmapFontCache() {
         return cache;
     }
 
-    /**
+    */
+/**
      * The style for a label, see {@link Label}.
      *
      * @author Nathan Sweet - Modified by Daldegan
-     */
+     *//*
+
     static public class LabelDistanceFieldStyle {
         public BitmapFont font;
-        /**
+        */
+/**
          * Optional.
-         */
+         *//*
+
         public Color fontColor;
-        /**
+        */
+/**
          * Optional.
-         */
+         *//*
+
         public Drawable background;
 
         public LabelDistanceFieldStyle() {
@@ -393,3 +423,4 @@ public class LabelDistanceField extends Widget {
         }
     }
 }
+*/

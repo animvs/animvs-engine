@@ -5,9 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -18,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -136,7 +133,7 @@ public abstract class AnimvsUI2 implements ApplicationListener {
 
     public void setBoundsByViewport(Viewport viewport) {
         //window.setBounds(viewport.getLeftGutterWidth(), viewport.getTopGutterY(), viewport.getScreenWidth(), viewport.getScreenHeight());
-        window.setBounds(viewport.getLeftGutterWidth(), viewport.getTopGutterHeight()-1, viewport.getScreenWidth(), viewport.getScreenHeight()+1);
+        window.setBounds(viewport.getLeftGutterWidth(), viewport.getTopGutterHeight() - 1, viewport.getScreenWidth(), viewport.getScreenHeight() + 1);
     }
 
     @Override
@@ -259,7 +256,7 @@ public abstract class AnimvsUI2 implements ApplicationListener {
             novoLabel = new Label(texto, uiSkin);
 
         novoLabel.setWrap(true);
-        novoLabel.setAlignment(Align.center);
+        //novoLabel.setAlignment(Align.center);
 
         return novoLabel;
     }

@@ -1,3 +1,4 @@
+/*
 package br.com.animvs.engine2.ui;
 
 import com.badlogic.gdx.graphics.Color;
@@ -15,9 +16,11 @@ import com.badlogic.gdx.utils.Scaling;
 
 import br.com.animvs.engine2.graphics.font.AnimvsDistanceFieldFontController;
 
+*/
 /**
  * Created by Daldegan on 14/10/2014.
- */
+ *//*
+
 public class ImageTextButtonDistanceField extends Button {
     private AnimvsDistanceFieldFontController distanceFieldController;
 
@@ -146,15 +149,19 @@ public class ImageTextButtonDistanceField extends Button {
         setSize(getPrefWidth(), getPrefHeight());
     }
 
-    /**
+    */
+/**
      * The style for an image text button, see {@link ImageTextButton}.
      *
      * @author Nathan Sweet
-     */
+     *//*
+
     static public class ImageTextButtonDistanceFieldStyle extends TextButton.TextButtonStyle {
-        /**
+        */
+/**
          * Optional.
-         */
+         *//*
+
         public Drawable imageUp, imageDown, imageOver, imageChecked, imageCheckedOver, imageDisabled;
         public ImageTextButtonDistanceFieldStyle() {
         }
@@ -178,3 +185,4 @@ public class ImageTextButtonDistanceField extends Button {
         }
     }
 }
+*/
