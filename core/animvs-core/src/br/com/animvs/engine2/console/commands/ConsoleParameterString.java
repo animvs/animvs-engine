@@ -16,6 +16,9 @@ public final class ConsoleParameterString extends ConsoleParameter {
 
     @Override
     protected String eventParse(String parameter) throws ConsoleParseException {
+        if (parameter.charAt(0) == ' ') //ignore first char if it is a blank space
+            parameter = parameter.substring(1, parameter.length());
+
         return parameter;
     }
 }

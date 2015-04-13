@@ -16,6 +16,6 @@ public final class ConsoleParameterFloat extends ConsoleParameter {
 
     @Override
     protected Float eventParse(String parameter) throws ConsoleParseException {
-        return Float.parseFloat(parameter);
+        return Float.parseFloat(parameter.trim());
     }
 }

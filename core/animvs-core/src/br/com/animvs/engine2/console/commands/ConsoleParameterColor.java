@@ -23,6 +23,6 @@ public final class ConsoleParameterColor extends ConsoleParameter {
         if (split.length < 4)
             throw new IllegalArgumentException("CONSOLE - Error parsing Color parameter: four FLOAT parameters are required while ONLY '" + split.length + "' where specified. Usage ex: '1:1:1:1'");
 
-        return new Color(Float.parseFloat(split[0]), Float.parseFloat(split[1]), Float.parseFloat(split[2]), Float.parseFloat(split[3]));
+        return new Color(Float.parseFloat(split[0].trim()), Float.parseFloat(split[1].trim()), Float.parseFloat(split[2].trim()), Float.parseFloat(split[3].trim()));
     }
 }

@@ -16,6 +16,6 @@ public final class ConsoleParameterBoolean extends ConsoleParameter {
 
     @Override
     protected Boolean eventParse(String parameter) throws ConsoleParseException {
-        return Boolean.parseBoolean(parameter);
+        return Boolean.parseBoolean(parameter.trim());
     }
 }

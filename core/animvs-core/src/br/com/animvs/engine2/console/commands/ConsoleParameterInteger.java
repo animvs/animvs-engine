@@ -16,6 +16,6 @@ public final class ConsoleParameterInteger extends ConsoleParameter {
 
     @Override
     protected Integer eventParse(String parameter) throws ConsoleParseException {
-        return Integer.parseInt(parameter);
+        return Integer.parseInt(parameter.trim());
     }
 }
