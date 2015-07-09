@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -368,7 +369,7 @@ public abstract class AnimvsUI implements ApplicationListener {
 			novoLabel = new Label(texto, uiSkin);
 
 		novoLabel.setWrap(true);
-		//novoLabel.setAlignment(Align.center);
+		novoLabel.setAlignment(Align.center);
 
 		return novoLabel;
 	}
