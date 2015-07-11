@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -77,24 +78,24 @@ public abstract class AnimvsUI2 implements ApplicationListener {
     }
 
 
-    public AnimvsUI2(AnimvsUIController2 controller, AssetManager assetManager, String caminhoUISkin, String fonteNome, BitmapFont fonte) {
+    public AnimvsUI2(AnimvsUIController2 controller, AssetManager assetManager, String caminhoUISkin, String fonteNome, BitmapFont fonte, boolean usePolygonSpriteBatch) {
         if (controller == null)
             throw new AnimvsUIException("O parâmetro controller não pode ser null");
 
         ArrayMap<String, BitmapFont> fontes = new ArrayMap<String, BitmapFont>();
         fontes.put(fonteNome, fonte);
 
-        initialize(fontes, assetManager, caminhoUISkin, null);
+        initialize(fontes, assetManager, caminhoUISkin, null, usePolygonSpriteBatch);
     }
 
-    public AnimvsUI2(AnimvsUIController2 controller, AssetManager assetManager, String caminhoUISkin, ArrayMap<String, BitmapFont> fontes) {
+    public AnimvsUI2(AnimvsUIController2 controller, AssetManager assetManager, String caminhoUISkin, ArrayMap<String, BitmapFont> fontes, boolean usePolygonSpriteBatch) {
         if (controller == null)
             throw new AnimvsUIException("O parâmetro controller não pode ser null");
 
         this.controller = controller;
         ratioCache = new Vector2();
 
-        initialize(fontes, assetManager, caminhoUISkin, windowStyleName);
+        initialize(fontes, assetManager, caminhoUISkin, windowStyleName, usePolygonSpriteBatch);
     }
 
     @Override
@@ -229,7 +230,7 @@ public abstract class AnimvsUI2 implements ApplicationListener {
 
     protected abstract void eventBuild(int width, int height, float ratioX, float ratioY);
 
-    private final void initialize(ArrayMap<String, BitmapFont> fontes, AssetManager assetManager, String caminhoUISkin, String windowStyleName) {
+    private final void initialize(ArrayMap<String, BitmapFont> fontes, AssetManager assetManager, String caminhoUISkin, String windowStyleName, boolean usePolygonSpriteBatch) {
         this.ratioCache = new Vector2();
 
         this.assetManager = assetManager;
@@ -240,7 +241,10 @@ public abstract class AnimvsUI2 implements ApplicationListener {
         //this.stage = new Stage(new FitViewport(getController().getResolutionReal().x, getController().getResolutionReal().y));
         //this.stage = new Stage(new FitViewport(768, 1280));
 
-        this.stage = new Stage(new ScreenViewport(), new PolygonSpriteBatch());
+        if (usePolygonSpriteBatch)
+            this.stage = new Stage(new ScreenViewport(), new PolygonSpriteBatch());
+        else
+            this.stage = new Stage(new ScreenViewport(), new SpriteBatch());
     }
 
     protected final Label createLabelCentered(String texto, Skin uiSkin) {
