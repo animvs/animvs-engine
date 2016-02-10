@@ -236,12 +236,18 @@ public class AnimacaoSkeletal {
         }
 
         if (polygonBatchCache != null)
+            polygonBatchCache.begin();
+
+        if (polygonBatchCache != null)
             renderer.draw(polygonBatchCache, skeleton);
         else
             renderer.draw(batch, skeleton);
 
         if (shader != null)
             shader.endRender(batch);
+
+        if (polygonBatchCache != null)
+            polygonBatchCache.end();
 
         //batch.end();
     }
