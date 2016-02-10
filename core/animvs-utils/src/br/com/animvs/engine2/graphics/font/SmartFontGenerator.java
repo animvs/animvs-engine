@@ -114,7 +114,7 @@ class SmartFontGenerator {
             // above
 
             Gdx.app.log(TAG, "Generating Font - Name: " + fontName + " Size: " + fontSize + " characters: " + characters);
-            font = generateFontWriteFiles(fontName, fontFile, fontSize, pageSize, pageSize, characters, 1.666f);
+            font = generateFontWriteFiles(fontName, fontFile, fontSize, pageSize, pageSize, characters);
             // arquivosFonte.add(fontFile.path());
         }
         return font;
@@ -142,19 +142,6 @@ class SmartFontGenerator {
      * @param fontSize
      */
     private AnimvsBitmapFont generateFontWriteFiles(String fontName, FileHandle fontFile, int fontSize, int pageWidth, int pageHeight, String characters) {
-        return generateFontWriteFiles(fontName, fontFile, fontSize, pageWidth, pageHeight, characters, 0f);
-    }
-
-    /**
-     * Convenience method for generating a font, and then writing the fnt and
-     * png files. Writing a generated font to files allows the possibility of
-     * only generating the fonts when they are missing, otherwise loading from a
-     * previously generated file.
-     *
-     * @param fontFile
-     * @param fontSize
-     */
-    private AnimvsBitmapFont generateFontWriteFiles(String fontName, FileHandle fontFile, int fontSize, int pageWidth, int pageHeight, String characters, float borderWidth) {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
 
         PixmapPacker packer = new PixmapPacker(pageWidth, pageHeight, Pixmap.Format.RGBA8888, 1, false);
@@ -163,11 +150,8 @@ class SmartFontGenerator {
         fontParameters.characters = characters;
         fontParameters.size = fontSize;
         fontParameters.minFilter = TextureFilter.Nearest;
-        fontParameters.magFilter = TextureFilter.Nearest;
+        fontParameters.magFilter = TextureFilter.Linear;
         fontParameters.packer = packer;
-
-        if (borderWidth > 0f)
-            fontParameters.borderWidth = borderWidth;
 
         // FreeTypeFontGenerator.FreeTypeBitmapFontData fontData =
         // generator.generateData(fontSize, characters, false, packer);
